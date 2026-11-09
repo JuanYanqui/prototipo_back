@@ -1,0 +1,7 @@
+target/
+nbproject/private/
+nbactions.xml
+nb-configuration.xml
+.idea/
+*.iml
+.vscode/

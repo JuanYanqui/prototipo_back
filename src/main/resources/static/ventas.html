@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nueva venta - Comercial Nova</title>
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<!-- Menu superior (se repite en cada ventana) -->
+<header>
+  <a class="marca" href="index.html">Comercial Nova</a>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="ventas.html" class="activo">Nueva venta</a>
+    <a href="inventario.html">Inventario</a>
+    <a href="historial.html">Historial de ventas</a>
+    <a href="concurrencia.html">Demo concurrencia</a>
+  </nav>
+</header>
+
+<!-- ===================== VENTANA: NUEVA VENTA ===================== -->
+<main>
+  <h1 class="titulo-pagina">Nueva venta
+    <small>Seleccione el cliente, agregue productos al carrito y registre la venta.</small></h1>
+
+  <section>
+    <div class="fila">
+      <div><label>Cliente</label><select id="cliente"></select></div>
+      <div><label>Vendedor</label><input id="vendedor" value="Vendedor 1"></div>
+    </div>
+    <div class="fila">
+      <div><label>Producto</label><select id="producto"></select></div>
+      <div class="chico"><label>Cantidad</label><input id="cantidad" type="number" min="1" value="1"></div>
+      <div class="chico"><button onclick="agregarItem()">Agregar</button></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Carrito</h2>
+    <table>
+      <thead><tr><th>Producto</th><th class="num">Cant.</th><th class="num">P. unit.</th><th class="num">Subtotal</th><th></th></tr></thead>
+      <tbody id="carrito"></tbody>
+    </table>
+    <div class="total">Total: $<span id="total">0.00</span></div>
+    <button class="ok" id="btnVender" onclick="registrarVenta()">Registrar venta</button>
+    <div id="msgVenta" class="msg"></div>
+  </section>
+</main>
+
+<script src="js/comun.js"></script>
+<script src="js/ventas.js"></script>
+</body>
+</html>

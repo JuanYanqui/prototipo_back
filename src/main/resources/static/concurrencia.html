@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo de concurrencia - Comercial Nova</title>
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<header>
+  <a class="marca" href="index.html">Comercial Nova</a>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="ventas.html">Nueva venta</a>
+    <a href="inventario.html">Inventario</a>
+    <a href="historial.html">Historial de ventas</a>
+    <a href="concurrencia.html" class="activo">Demo concurrencia</a>
+  </nav>
+</header>
+
+<!-- ===================== VENTANA: DEMO DE CONCURRENCIA ===================== -->
+<main>
+  <h1 class="titulo-pagina">Demostración de concurrencia
+    <small>Varios vendedores intentan comprar el mismo producto al mismo tiempo.
+      El sistema nunca vende más de lo que hay en stock.</small></h1>
+
+  <section>
+    <div class="fila">
+      <div><label>Producto</label><select id="simProducto"></select></div>
+      <div class="chico"><label>Vendedores</label><input id="simN" type="number" min="2" value="20"></div>
+      <div style="flex:0 0 210px"><button onclick="simular()" id="btnSim">Lanzar ventas simultáneas</button></div>
+    </div>
+
+    <div class="resultado-sim" id="resSim" style="display:none">
+      <div class="caja">Stock antes<b id="simAntes">-</b></div>
+      <div class="caja verde">Ventas aceptadas<b id="simOk">-</b></div>
+      <div class="caja rojo">Rechazadas (sin stock)<b id="simNo">-</b></div>
+      <div class="caja">Stock después<b id="simDespues">-</b></div>
+    </div>
+    <div id="msgSim" class="msg"></div>
+  </section>
+</main>
+
+<script src="js/comun.js"></script>
+<script src="js/concurrencia.js"></script>
+</body>
+</html>

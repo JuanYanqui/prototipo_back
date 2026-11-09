@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Historial de ventas - Comercial Nova</title>
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<header>
+  <a class="marca" href="index.html">Comercial Nova</a>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="ventas.html">Nueva venta</a>
+    <a href="inventario.html">Inventario</a>
+    <a href="historial.html" class="activo">Historial de ventas</a>
+    <a href="concurrencia.html">Demo concurrencia</a>
+  </nav>
+</header>
+
+<!-- ===================== VENTANA: HISTORIAL DE VENTAS ===================== -->
+<main>
+  <h1 class="titulo-pagina">Historial de ventas
+    <small>Últimas 20 ventas registradas.</small></h1>
+
+  <section>
+    <h2>Ventas <button class="sec mini" style="float:right" onclick="cargarVentas()">Recargar</button></h2>
+    <table>
+      <thead><tr><th>#</th><th>Fecha</th><th>Cliente</th><th>Vendedor</th><th>Detalle</th><th class="num">Total</th></tr></thead>
+      <tbody id="ventas"></tbody>
+    </table>
+  </section>
+</main>
+
+<script src="js/comun.js"></script>
+<script src="js/historial.js"></script>
+</body>
+</html>
