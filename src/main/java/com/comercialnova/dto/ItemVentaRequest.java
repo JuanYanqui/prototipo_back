@@ -12,7 +12,6 @@ public class ItemVentaRequest {
     @Positive(message = "La cantidad debe ser mayor a cero")
     private Integer cantidad;
 
-    /** Requerido por Jackson para leer el JSON. */
     public ItemVentaRequest() { }
 
     public ItemVentaRequest(Long productoId, Integer cantidad) {

@@ -10,7 +10,6 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-/** Carga datos ficticios de ejemplo si la base esta vacia. */
 @Component
 public class DatosIniciales implements CommandLineRunner {
 
@@ -30,7 +29,6 @@ public class DatosIniciales implements CommandLineRunner {
                     new Producto("Mouse inalambrico", new BigDecimal("18.50"), 40),
                     new Producto("Monitor 24\" Full HD", new BigDecimal("159.00"), 8),
                     new Producto("Teclado mecanico", new BigDecimal("59.99"), 12),
-                    // Ultima unidad: sirve para demostrar la venta concurrente
                     new Producto("Tablet Nova 10 (ultima unidad)", new BigDecimal("299.00"), 1)));
         }
         if (clienteRepository.count() == 0) {

@@ -2,7 +2,6 @@ package com.comercialnova.dto;
 
 import java.time.LocalDateTime;
 
-/** Formato unico de error que reciben todos los clientes de la API. */
 public class ApiError {
 
     private final int status;

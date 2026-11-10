@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/** Lo que la API devuelve de una venta (no expone las entidades JPA). */
 public class VentaResponse {
 
     private final Long id;

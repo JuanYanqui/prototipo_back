@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-/** Problema #2 del caso: dos empleados editan el mismo producto. */
 @SpringBootTest
 class ProductoEdicionTest {
 
@@ -32,14 +31,12 @@ class ProductoEdicionTest {
     void edicionSimultanea() {
         ProductoResponse original = productoService.crear(
                 new ProductoRequest("Impresora", new BigDecimal("120.00"), 4, null));
-        Long versionVista = original.getVersion(); // ambos empleados ven esta version
+        Long versionVista = original.getVersion();
 
-        // Empleado A guarda primero: OK
         ProductoResponse deA = productoService.actualizar(original.getId(),
                 new ProductoRequest("Impresora", new BigDecimal("115.00"), 4, versionVista));
         assertThat(deA.getVersion()).isGreaterThan(versionVista);
 
-        // Empleado B guarda con la version vieja: RECHAZADO, no pisa el cambio de A
         assertThatThrownBy(() -> productoService.actualizar(original.getId(),
                 new ProductoRequest("Impresora", new BigDecimal("130.00"), 4, versionVista)))
                 .isInstanceOf(ConflictoEdicionException.class);
@@ -58,7 +55,6 @@ class ProductoEdicionTest {
         ventaService.registrarVenta(new VentaRequest(clienteId, "Vendedor 1",
                 Arrays.asList(new ItemVentaRequest(original.getId(), 1))));
 
-        // El administrador guarda el formulario que abrio antes de la venta (stock 10)
         assertThatThrownBy(() -> productoService.actualizar(original.getId(),
                 new ProductoRequest("Router", new BigDecimal("45.00"), 10, versionVista)))
                 .isInstanceOf(ConflictoEdicionException.class);

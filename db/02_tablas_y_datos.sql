@@ -1,7 +1,7 @@
 -- =====================================================================
--- PASO 2 - Ejecutar conectado a la base "comercialnova" con el usuario
--- nova_app (en DBeaver: nueva conexion PostgreSQL, base comercialnova,
--- usuario nova_app / nova123; luego Editor SQL > Ejecutar script, Alt+X).
+-- PASO 2 - Ejecutar conectado a la base "nova_app" con el usuario
+-- postgres (en DBeaver: conexion PostgreSQL, base nova_app,
+-- usuario postgres; luego Editor SQL > Ejecutar script, Alt+X).
 --
 -- Es opcional: la aplicacion crea las mismas tablas al arrancar
 -- (src/main/resources/schema.sql) y carga datos de ejemplo si estan vacias.

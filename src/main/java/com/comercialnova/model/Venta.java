@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Entidad Venta (cabecera). Agrupa los detalles y calcula su propio total,
- * de modo que el total nunca puede quedar desalineado con los detalles.
- */
 @Entity
 @Table(name = "venta")
 public class Venta {
@@ -36,7 +32,6 @@ public class Venta {
     private List<DetalleVenta> detalles = new ArrayList<>();
 
     protected Venta() {
-        // requerido por JPA
     }
 
     public Venta(Cliente cliente, String vendedor) {
@@ -51,7 +46,6 @@ public class Venta {
         this.fecha = LocalDateTime.now();
     }
 
-    /** Agrega una linea a la venta y recalcula el total. */
     public void agregarDetalle(Producto producto, int cantidad) {
         DetalleVenta detalle = new DetalleVenta(this, producto, cantidad);
         detalles.add(detalle);

@@ -18,15 +18,6 @@ import java.util.TreeMap;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Logica de negocio de ventas (capa de servicio).
- *
- * Reglas que garantiza:
- *  1. Nunca se vende mas de lo que hay en stock, aunque muchos vendedores
- *     vendan al mismo tiempo (descuento atomico en la base de datos).
- *  2. La venta es TODO o NADA: si un solo producto no tiene stock, no se
- *     descuenta nada de ningun producto (transaccion con rollback).
- */
 @Service
 public class VentaService {
 
@@ -53,17 +44,12 @@ public class VentaService {
 
         Venta venta = new Venta(cliente, request.getVendedor());
 
-        // Se agrupan cantidades del mismo producto y se ordenan por id.
-        // Ordenar evita bloqueos cruzados (deadlocks) entre dos ventas que
-        // tengan los mismos productos en distinto orden.
         for (Map.Entry<Long, Integer> item : agruparPorProducto(request.getItems()).entrySet()) {
             Long productoId = item.getKey();
             int cantidad = item.getValue();
 
             int filasActualizadas = productoRepository.descontarStock(productoId, cantidad);
             if (filasActualizadas == 0) {
-                // No se desconto: o no existe, o no alcanza el stock.
-                // La excepcion provoca ROLLBACK de todo lo hecho en esta venta.
                 Producto producto = productoRepository.findById(productoId)
                         .orElseThrow(() -> new RecursoNoEncontradoException("Producto", productoId));
                 throw new StockInsuficienteException(producto.getNombre(), producto.getStock(), cantidad);

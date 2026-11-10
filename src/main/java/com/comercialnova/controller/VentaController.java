@@ -8,11 +8,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Controlador REST de ventas (la "C" de MVC).
- * Solo recibe la peticion, delega en el servicio y devuelve la respuesta;
- * no contiene reglas de negocio. Lo mismo lo puede usar la web o una app movil.
- */
 @RestController
 @RequestMapping("/api/ventas")
 public class VentaController {

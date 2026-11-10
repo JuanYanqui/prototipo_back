@@ -3,10 +3,6 @@ package com.comercialnova.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-/**
- * Linea de una venta. Guarda el precio unitario del momento de la venta,
- * para que un cambio de precio posterior no altere ventas ya registradas.
- */
 @Entity
 @Table(name = "detalle_venta")
 public class DetalleVenta {
@@ -33,7 +29,6 @@ public class DetalleVenta {
     private BigDecimal subtotal;
 
     protected DetalleVenta() {
-        // requerido por JPA
     }
 
     DetalleVenta(Venta venta, Producto producto, int cantidad) {

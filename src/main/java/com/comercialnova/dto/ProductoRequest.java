@@ -6,11 +6,6 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
-/**
- * Datos para crear o editar un producto.
- * En la edicion, {@code version} es la version que el usuario vio al abrir
- * el formulario; si ya cambio, la edicion se rechaza.
- */
 public class ProductoRequest {
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -26,7 +21,6 @@ public class ProductoRequest {
 
     private Long version;
 
-    /** Requerido por Jackson para leer el JSON. */
     public ProductoRequest() { }
 
     public ProductoRequest(String nombre, BigDecimal precio, Integer stock, Long version) {

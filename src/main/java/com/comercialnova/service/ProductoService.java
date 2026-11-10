@@ -11,13 +11,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Logica de negocio de productos.
- *
- * La edicion usa BLOQUEO OPTIMISTA: el cliente envia la version que vio;
- * si en la base ya hay otra, alguien modifico el producto entretanto y la
- * edicion se rechaza en lugar de pisar los cambios del otro (problema #2).
- */
 @Service
 public class ProductoService {
 
@@ -58,9 +51,6 @@ public class ProductoService {
         }
 
         producto.actualizarDatos(request.getNombre(), request.getPrecio(), request.getStock());
-        // saveAndFlush fuerza el UPDATE ... WHERE version = ? ahora mismo; si otro
-        // usuario guardo en el mismo instante, Hibernate lanza una excepcion de
-        // bloqueo optimista que el GlobalExceptionHandler convierte en 409.
         return ProductoResponse.de(productoRepository.saveAndFlush(producto));
     }
 

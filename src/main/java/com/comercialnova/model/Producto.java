@@ -3,17 +3,6 @@ package com.comercialnova.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-/**
- * Entidad Producto (Modelo en MVC).
- *
- * Encapsula sus propias reglas: un producto nunca puede quedar con stock
- * negativo ni con precio menor o igual a cero.
- *
- * El campo {@code version} activa el BLOQUEO OPTIMISTA de JPA: cada vez que
- * el producto se actualiza, la version sube en 1. Si dos empleados editan el
- * mismo producto a la vez, el segundo en guardar es rechazado porque su
- * version ya no coincide con la de la base de datos (problema #2 del caso).
- */
 @Entity
 @Table(name = "producto")
 public class Producto {
@@ -35,14 +24,12 @@ public class Producto {
     private Long version;
 
     protected Producto() {
-        // requerido por JPA
     }
 
     public Producto(String nombre, BigDecimal precio, int stock) {
         actualizarDatos(nombre, precio, stock);
     }
 
-    /** Actualiza los datos editables validando las reglas del negocio. */
     public final void actualizarDatos(String nombre, BigDecimal precio, int stock) {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre del producto es obligatorio");

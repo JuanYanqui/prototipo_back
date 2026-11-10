@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-/** Pruebas del flujo de venta: operaciones validas e invalidas. */
 @SpringBootTest
 class VentaServiceTest {
 

@@ -6,7 +6,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/** Datos que envia el cliente (web o movil) para registrar una venta. */
 public class VentaRequest {
 
     @NotNull(message = "El cliente es obligatorio")
@@ -19,7 +18,6 @@ public class VentaRequest {
     @NotEmpty(message = "La venta debe tener al menos un producto")
     private List<ItemVentaRequest> items;
 
-    /** Requerido por Jackson para leer el JSON. */
     public VentaRequest() { }
 
     public VentaRequest(Long clienteId, String vendedor, List<ItemVentaRequest> items) {

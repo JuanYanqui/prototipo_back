@@ -2,7 +2,6 @@ package com.comercialnova.model;
 
 import javax.persistence.*;
 
-/** Entidad Cliente (Modelo en MVC). */
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -21,7 +20,6 @@ public class Cliente {
     private String email;
 
     protected Cliente() {
-        // requerido por JPA
     }
 
     public Cliente(String identificacion, String nombre, String email) {

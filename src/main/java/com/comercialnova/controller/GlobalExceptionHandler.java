@@ -13,10 +13,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**
- * Traduce las excepciones de negocio a respuestas HTTP claras.
- * Todos los errores salen con el mismo formato (ApiError).
- */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

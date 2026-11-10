@@ -22,10 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-/**
- * Pregunta de defensa #1: "¿Que pasa si veinte vendedores intentan vender
- * simultaneamente el ultimo producto disponible?"
- */
 @SpringBootTest
 class ConcurrenciaVentaTest {
 
@@ -70,7 +66,7 @@ class ConcurrenciaVentaTest {
             String vendedor = "Vendedor " + i;
             pool.submit(() -> {
                 try {
-                    largada.await(); // todos arrancan al mismo tiempo
+                    largada.await();
                     ventaService.registrarVenta(new VentaRequest(clienteId, vendedor,
                             Arrays.asList(new ItemVentaRequest(p.getId(), 1))));
                     exitos.incrementAndGet();
