@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <!-- MENU LATERAL: para agregar una pantalla, agregar un p:menuitem con su outcome -->
+    <div class="layout-menu">
+        <h:form id="menuform">
+            <p:menu styleClass="menu-lateral">
+                <p:menuitem value="Inicio" outcome="/index" icon="pi pi-home"
+                            styleClass="#{view.viewId eq '/index.xhtml' ? 'menu-activo' : ''}"/>
+                <p:submenu label="Ventas">
+                    <p:menuitem value="Nueva venta" outcome="/ventas/ventaNueva" icon="pi pi-shopping-cart"
+                                styleClass="#{view.viewId eq '/ventas/ventaNueva.xhtml' ? 'menu-activo' : ''}"/>
+                    <p:menuitem value="Historial de ventas" outcome="/ventas/ventaHistorial" icon="pi pi-list"
+                                styleClass="#{view.viewId eq '/ventas/ventaHistorial.xhtml' ? 'menu-activo' : ''}"/>
+                </p:submenu>
+                <p:submenu label="Inventario">
+                    <p:menuitem value="Productos" outcome="/inventario/inventarioProductos" icon="pi pi-box"
+                                styleClass="#{view.viewId eq '/inventario/inventarioProductos.xhtml' ? 'menu-activo' : ''}"/>
+                </p:submenu>
+                <p:submenu label="Demostración">
+                    <p:menuitem value="Concurrencia" outcome="/demo/demoConcurrencia" icon="pi pi-bolt"
+                                styleClass="#{view.viewId eq '/demo/demoConcurrencia.xhtml' ? 'menu-activo' : ''}"/>
+                </p:submenu>
+            </p:menu>
+        </h:form>
+    </div>
+</ui:composition>

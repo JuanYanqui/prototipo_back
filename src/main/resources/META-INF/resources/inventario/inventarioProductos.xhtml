@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+    <!-- PANTALLA: INVENTARIO  ·  Controlador: beans/inventario/CtrInventarioProductos.java -->
+    <ui:define name="content">
+        <h:form id="frmListado">
+            <div class="cabecera">
+                <h:outputText value="#{CtrInventarioProductos.titulo}" styleClass="titulo"/>
+                <h:panelGroup styleClass="acciones">
+                    <p:commandButton value="Filtrar" icon="pi pi-refresh" process="@this"
+                                     actionListener="#{CtrInventarioProductos.filtrar()}" update="@form"/>
+                </h:panelGroup>
+            </div>
+            <p:separator/>
+
+            <p:dataTable value="#{CtrInventarioProductos.productos}" var="pr" emptyMessage="No hay productos" styleClass="tabla">
+                <p:column headerText="Producto">#{pr.nombre}</p:column>
+                <p:column headerText="Precio" styleClass="num">
+                    <h:outputText value="#{pr.precio}"><f:convertNumber pattern="$#,##0.00" locale="en_US"/></h:outputText>
+                </p:column>
+                <p:column headerText="Stock" styleClass="num">
+                    <h:outputText value="#{pr.agotado ? 'Agotado' : pr.stock}" styleClass="#{pr.agotado ? 'agotado' : ''}"/>
+                </p:column>
+                <p:column headerText="Versión" styleClass="num">#{pr.version}</p:column>
+                <p:column style="width:110px">
+                    <p:commandButton value="Editar" icon="pi pi-pencil" styleClass="ui-button-secondary"
+                                     actionListener="#{CtrInventarioProductos.editar(pr)}" process="@this" update="@form"/>
+                </p:column>
+            </p:dataTable>
+
+            <!-- Edicion (bloqueo optimista con "version") -->
+            <p:panel header="Editar producto (versión que usted abrió: #{CtrInventarioProductos.edicion.version})"
+                     rendered="#{CtrInventarioProductos.editando}" styleClass="panel-edicion">
+                <div class="formgrid">
+                    <div class="campo ancho-2">
+                        <p:outputLabel for="nombre" value="Nombre"/>
+                        <p:inputText id="nombre" value="#{CtrInventarioProductos.edicion.nombre}"/>
+                    </div>
+                    <div class="campo">
+                        <p:outputLabel for="precio" value="Precio"/>
+                        <p:inputText id="precio" value="#{CtrInventarioProductos.edicion.precio}"/>
+                    </div>
+                    <div class="campo">
+                        <p:outputLabel for="stock" value="Stock"/>
+                        <p:inputText id="stock" value="#{CtrInventarioProductos.edicion.stock}"/>
+                    </div>
+                </div>
+                <p:commandButton value="Guardar" icon="pi pi-save"
+                                 actionListener="#{CtrInventarioProductos.guardar()}" update="@form"/>
+                <p:commandButton value="Cancelar" styleClass="ui-button-secondary" style="margin-left:8px"
+                                 actionListener="#{CtrInventarioProductos.cancelar()}" process="@this" update="@form"/>
+                <p class="nota">Prueba: abra esta pantalla en dos pestañas, edite el mismo producto en ambas
+                    y guarde primero en una y luego en la otra. La segunda será rechazada.</p>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

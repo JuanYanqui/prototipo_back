@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+    <!-- PANTALLA: NUEVA VENTA  ·  Controlador: beans/ventas/CtrVentaNueva.java -->
+    <ui:define name="content">
+        <h:form id="frmVenta">
+            <div class="cabecera">
+                <h:outputText value="#{CtrVentaNueva.titulo}" styleClass="titulo"/>
+                <h:panelGroup styleClass="acciones">
+                    <p:commandButton value="Registrar venta" icon="pi pi-check" styleClass="ui-button-success"
+                                     actionListener="#{CtrVentaNueva.registrar()}" update="@form"/>
+                    <p:commandButton value="Limpiar" icon="pi pi-trash" styleClass="ui-button-secondary"
+                                     actionListener="#{CtrVentaNueva.nuevo()}" process="@this" update="@form"/>
+                </h:panelGroup>
+            </div>
+            <p:separator/>
+
+            <!-- Datos de la venta -->
+            <div class="formgrid">
+                <div class="campo">
+                    <p:outputLabel for="cliente" value="Cliente"/>
+                    <p:selectOneMenu id="cliente" value="#{CtrVentaNueva.clienteId}">
+                        <f:selectItems value="#{CtrVentaNueva.clientes}" var="c"
+                                       itemValue="#{c.id}" itemLabel="#{c.nombre} (#{c.identificacion})"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="campo">
+                    <p:outputLabel for="vendedor" value="Vendedor"/>
+                    <p:inputText id="vendedor" value="#{CtrVentaNueva.vendedor}"/>
+                </div>
+                <div class="campo ancho-2">
+                    <p:outputLabel for="producto" value="Producto"/>
+                    <p:selectOneMenu id="producto" value="#{CtrVentaNueva.productoId}">
+                        <f:selectItems value="#{CtrVentaNueva.productos}" var="pr" itemValue="#{pr.id}"
+                                       itemLabel="#{pr.nombre} - $#{pr.precio} (stock #{pr.stock})"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="campo">
+                    <p:outputLabel for="cantidad" value="Cantidad"/>
+                    <p:spinner id="cantidad" value="#{CtrVentaNueva.cantidad}" min="1"/>
+                </div>
+                <div class="campo boton">
+                    <p:commandButton value="Agregar" icon="pi pi-plus"
+                                     actionListener="#{CtrVentaNueva.agregar()}" update="@form"/>
+                </div>
+            </div>
+
+            <!-- Carrito -->
+            <p:dataTable id="tblCarrito" value="#{CtrVentaNueva.carrito}" var="item"
+                         emptyMessage="Sin productos" styleClass="tabla">
+                <f:facet name="header">Carrito</f:facet>
+                <p:column headerText="Producto">#{item.nombre}</p:column>
+                <p:column headerText="Cant." styleClass="num">#{item.cantidad}</p:column>
+                <p:column headerText="P. unit." styleClass="num">
+                    <h:outputText value="#{item.precio}"><f:convertNumber pattern="$#,##0.00" locale="en_US"/></h:outputText>
+                </p:column>
+                <p:column headerText="Subtotal" styleClass="num">
+                    <h:outputText value="#{item.subtotal}"><f:convertNumber pattern="$#,##0.00" locale="en_US"/></h:outputText>
+                </p:column>
+                <p:column style="width:60px">
+                    <p:commandButton icon="pi pi-times" title="Quitar" process="@this" update="@form"
+                                     actionListener="#{CtrVentaNueva.quitar(item)}" styleClass="ui-button-danger ui-button-flat"/>
+                </p:column>
+            </p:dataTable>
+            <div class="total">Total:
+                <h:outputText value="#{CtrVentaNueva.total}"><f:convertNumber pattern="$#,##0.00" locale="en_US"/></h:outputText>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
