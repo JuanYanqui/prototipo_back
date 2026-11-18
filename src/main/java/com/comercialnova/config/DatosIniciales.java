@@ -3,11 +3,14 @@ package com.comercialnova.config;
 import java.util.Arrays;
 import com.comercialnova.model.Cliente;
 import com.comercialnova.model.Producto;
+import com.comercialnova.model.Rol;
+import com.comercialnova.model.Usuario;
 import com.comercialnova.repository.ClienteRepository;
 import com.comercialnova.repository.ProductoRepository;
+import com.comercialnova.repository.UsuarioRepository;
 import java.math.BigDecimal;
-import java.util.List;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,10 +18,17 @@ public class DatosIniciales implements CommandLineRunner {
 
     private final ProductoRepository productoRepository;
     private final ClienteRepository clienteRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DatosIniciales(ProductoRepository productoRepository, ClienteRepository clienteRepository) {
+    public DatosIniciales(ProductoRepository productoRepository,
+                          ClienteRepository clienteRepository,
+                          UsuarioRepository usuarioRepository,
+                          PasswordEncoder passwordEncoder) {
         this.productoRepository = productoRepository;
         this.clienteRepository = clienteRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,6 +46,11 @@ public class DatosIniciales implements CommandLineRunner {
                     new Cliente("0900000001", "Consumidor Final", null),
                     new Cliente("0911111111", "Ana Torres", "ana.torres@ejemplo.com"),
                     new Cliente("0922222222", "Luis Mendoza", "luis.mendoza@ejemplo.com")));
+        }
+        if (usuarioRepository.count() == 0) {
+            usuarioRepository.saveAll(Arrays.asList(
+                    new Usuario("admin", passwordEncoder.encode("Lenguaje2027*"), "Administrador Nova", Rol.ADMIN),
+                    new Usuario("vendedor1", passwordEncoder.encode("vendedor123"), "Vendedor 1", Rol.VENDEDOR)));
         }
     }
 }
