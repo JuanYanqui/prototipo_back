@@ -1,7 +1,12 @@
 -- =====================================================================
--- PASO 3 (opcional) - Tabla de usuarios para login con perfiles.
--- La aplicacion tambien la crea con schema.sql y carga usuarios demo
--- en DatosIniciales (admin / admin123 y vendedor1 / vendedor123).
+-- PASO 3 - Tabla de usuarios para login con perfiles + datos iniciales.
+-- La aplicacion tambien crea la tabla con schema.sql y puede cargar
+-- usuarios desde DatosIniciales si la tabla esta vacia.
+--
+-- Usuarios:
+--   admin     / Lenguaje2027*   (ADMIN)
+--   vendedor1 / vendedor123     (VENDEDOR)
+-- Las claves van hasheadas con BCrypt (no en texto plano).
 -- =====================================================================
 
 CREATE TABLE IF NOT EXISTS usuario (
@@ -14,3 +19,17 @@ CREATE TABLE IF NOT EXISTS usuario (
     CONSTRAINT uq_usuario_username UNIQUE (username),
     CONSTRAINT ck_usuario_rol CHECK (rol IN ('ADMIN', 'VENDEDOR'))
 );
+
+INSERT INTO usuario (username, password_hash, nombre, rol, activo)
+VALUES
+    ('admin',
+     '$2a$10$xsSVDS75Ix2uv/mGG87Vp.8IlKnixoxruaA3Z5dznQIz4aJV7TnGO',
+     'Administrador Nova',
+     'ADMIN',
+     TRUE),
+    ('vendedor1',
+     '$2a$10$.mxxQA4DUqdqZySH8Jgso.a6bHdmbBJ1tiyibg7crFAzmHFCgJ.Xy',
+     'Vendedor 1',
+     'VENDEDOR',
+     TRUE)
+ON CONFLICT (username) DO NOTHING;
