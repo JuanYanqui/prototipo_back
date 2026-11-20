@@ -30,7 +30,7 @@ public class DashboardControlador {
             dto.getNombresProductos().add(p.getNombre());
             dto.getStocksProductos().add(p.getStock());
             if (p.getStock() == 0) dto.setStockAgotado(dto.getStockAgotado() + 1);
-            else if (p.getStock() < 10) dto.setStockBajo(dto.getStockBajo() + 1);
+            else if (p.estaBajoMinimo()) dto.setStockBajo(dto.getStockBajo() + 1);
             else dto.setStockNormal(dto.getStockNormal() + 1);
         }
 

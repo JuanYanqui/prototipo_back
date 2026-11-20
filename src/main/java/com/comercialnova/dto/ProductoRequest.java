@@ -19,14 +19,22 @@ public class ProductoRequest {
     @PositiveOrZero(message = "El stock no puede ser negativo")
     private Integer stock;
 
+    @PositiveOrZero(message = "El stock minimo no puede ser negativo")
+    private Integer stockMinimo;
+
     private Long version;
 
     public ProductoRequest() { }
 
     public ProductoRequest(String nombre, BigDecimal precio, Integer stock, Long version) {
+        this(nombre, precio, stock, null, version);
+    }
+
+    public ProductoRequest(String nombre, BigDecimal precio, Integer stock, Integer stockMinimo, Long version) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
+        this.stockMinimo = stockMinimo;
         this.version = version;
     }
 
@@ -36,6 +44,8 @@ public class ProductoRequest {
     public void setPrecio(BigDecimal precio) { this.precio = precio; }
     public Integer getStock() { return stock; }
     public void setStock(Integer stock) { this.stock = stock; }
+    public Integer getStockMinimo() { return stockMinimo; }
+    public void setStockMinimo(Integer stockMinimo) { this.stockMinimo = stockMinimo; }
     public Long getVersion() { return version; }
     public void setVersion(Long version) { this.version = version; }
 }

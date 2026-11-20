@@ -7,7 +7,9 @@ import com.comercialnova.dto.VentaResponse;
 import com.comercialnova.exception.RecursoNoEncontradoException;
 import com.comercialnova.exception.StockInsuficienteException;
 import com.comercialnova.model.Cliente;
+import com.comercialnova.model.DetalleVenta;
 import com.comercialnova.model.Producto;
+import com.comercialnova.model.TipoMovimiento;
 import com.comercialnova.model.Venta;
 import com.comercialnova.repository.ClienteRepository;
 import com.comercialnova.repository.ProductoRepository;
@@ -24,13 +26,16 @@ public class VentaService {
     private final VentaRepository ventaRepository;
     private final ProductoRepository productoRepository;
     private final ClienteRepository clienteRepository;
+    private final KardexService kardexService;
 
     public VentaService(VentaRepository ventaRepository,
                         ProductoRepository productoRepository,
-                        ClienteRepository clienteRepository) {
+                        ClienteRepository clienteRepository,
+                        KardexService kardexService) {
         this.ventaRepository = ventaRepository;
         this.productoRepository = productoRepository;
         this.clienteRepository = clienteRepository;
+        this.kardexService = kardexService;
     }
 
     @Transactional
@@ -60,7 +65,14 @@ public class VentaService {
             venta.agregarDetalle(producto, cantidad);
         }
 
-        return VentaResponse.de(ventaRepository.save(venta));
+        Venta guardada = ventaRepository.save(venta);
+        for (DetalleVenta detalle : guardada.getDetalles()) {
+            Producto producto = detalle.getProducto();
+            kardexService.registrar(producto, TipoMovimiento.SALIDA, detalle.getCantidad(),
+                    producto.getStock() + detalle.getCantidad(), producto.getStock(),
+                    "Venta #" + guardada.getId(), guardada.getVendedor());
+        }
+        return VentaResponse.de(guardada);
     }
 
     @Transactional(readOnly = true)
