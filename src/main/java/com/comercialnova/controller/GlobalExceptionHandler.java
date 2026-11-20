@@ -2,6 +2,8 @@ package com.comercialnova.controller;
 
 import com.comercialnova.dto.ApiError;
 import com.comercialnova.exception.ConflictoEdicionException;
+import com.comercialnova.exception.CredencialesInvalidasException;
+import com.comercialnova.exception.NoAutorizadoException;
 import com.comercialnova.exception.RecursoNoEncontradoException;
 import com.comercialnova.exception.StockInsuficienteException;
 import java.util.stream.Collectors;
@@ -15,6 +17,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(CredencialesInvalidasException.class)
+    public ResponseEntity<ApiError> credencialesInvalidas(CredencialesInvalidasException ex) {
+        return error(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
+    @ExceptionHandler(NoAutorizadoException.class)
+    public ResponseEntity<ApiError> noAutorizado(NoAutorizadoException ex) {
+        HttpStatus status = ex.isAutenticado() ? HttpStatus.FORBIDDEN : HttpStatus.UNAUTHORIZED;
+        return error(status, ex.getMessage());
+    }
 
     @ExceptionHandler(StockInsuficienteException.class)
     public ResponseEntity<ApiError> stockInsuficiente(StockInsuficienteException ex) {
