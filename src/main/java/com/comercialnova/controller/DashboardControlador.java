@@ -2,8 +2,10 @@ package com.comercialnova.controller;
 
 import com.comercialnova.dto.Dashboard; 
 import com.comercialnova.model.Producto; 
-import com.comercialnova.repository.ProductoRepository; 
+import com.comercialnova.repository.ProductoRepository;
+import com.comercialnova.repository.VentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,9 @@ public class DashboardControlador {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private VentaRepository ventaRepository;
 
     @GetMapping
     public Dashboard obtenerDatosDashboard() { 
@@ -29,9 +34,10 @@ public class DashboardControlador {
             else dto.setStockNormal(dto.getStockNormal() + 1);
         }
 
-        // Datos simulados para la pestaña de ventas
-        dto.getNombresTopProductos().addAll(java.util.Arrays.asList("Mouse inalambrico", "Teclado mecanico", "Monitor 24\"", "Laptop Nova 14\""));
-        dto.getCantidadesVendidas().addAll(java.util.Arrays.asList(50, 35, 20, 10));
+        for (Object[] fila : ventaRepository.productosMasVendidos(PageRequest.of(0, 5))) {
+            dto.getNombresTopProductos().add((String) fila[0]);
+            dto.getCantidadesVendidas().add(((Number) fila[1]).intValue());
+        }
 
         return dto;
     }
