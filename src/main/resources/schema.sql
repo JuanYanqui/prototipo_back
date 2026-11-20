@@ -1,6 +1,6 @@
 -- =====================================================================
 -- Comercial Nova - Esquema de base de datos
--- Compatible con PostgreSQL (y con H2 en modo PostgreSQL para pruebas).
+-- Base de datos: PostgreSQL.
 -- Se ejecuta al arrancar la aplicacion; IF NOT EXISTS evita borrar datos.
 -- =====================================================================
 
