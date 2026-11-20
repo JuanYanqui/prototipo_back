@@ -1,7 +1,7 @@
 package com.comercialnova.controller;
 
-import com.comercialnova.dto.Dashboard; 
-import com.comercialnova.model.Producto; 
+import com.comercialnova.dto.Dashboard;
+import com.comercialnova.model.Producto;
 import com.comercialnova.repository.ProductoRepository;
 import com.comercialnova.repository.VentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public class DashboardControlador {
     private VentaRepository ventaRepository;
 
     @GetMapping
-    public Dashboard obtenerDatosDashboard() { 
+    public Dashboard obtenerDatosDashboard() {
         List<Producto> productos = productoRepository.findAll();
-        Dashboard dto = new Dashboard(); 
+        Dashboard dto = new Dashboard();
 
         for (Producto p : productos) {
             dto.getNombresProductos().add(p.getNombre());

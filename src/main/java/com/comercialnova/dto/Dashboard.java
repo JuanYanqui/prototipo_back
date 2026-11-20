@@ -13,7 +13,6 @@ public class Dashboard {
     private List<String> nombresTopProductos = new ArrayList<>();
     private List<Integer> cantidadesVendidas = new ArrayList<>();
 
-    // Getters y Setters
     public List<String> getNombresProductos() { return nombresProductos; }
     public void setNombresProductos(List<String> nombresProductos) { this.nombresProductos = nombresProductos; }
     public List<Integer> getStocksProductos() { return stocksProductos; }
