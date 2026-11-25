@@ -112,4 +112,17 @@ class KardexTest {
         assertThat(bajo.isBajoMinimo()).isTrue();
         assertThat(normal.isBajoMinimo()).isFalse();
     }
+    
+    @Test
+    @DisplayName("El ultimo movimiento registrado debe aparecer primero en la lista del Kardex")
+    void ultimoMovimientoAlInicio() {
+        ProductoResponse p = crear("Kardex Orden", 5, null);
+        kardexService.ingresar(p.getId(), 10, "Ingreso de prueba de orden");
+        
+        List<MovimientoResponse> movimientos = kardexService.movimientos(p.getId());
+        
+        assertThat(movimientos).hasSize(2);
+        assertThat(movimientos.get(0).getMotivo()).isEqualTo("Ingreso de prueba de orden");
+        assertThat(movimientos.get(0).getTipo()).isEqualTo("ENTRADA");
+    }
 }
